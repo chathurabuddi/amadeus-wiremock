@@ -35,9 +35,9 @@ classes
 # IDEA #
 #################
 out
-wiremock.iml
-wiremock.ipr
-wiremock.iws
+amadeus-wiremock.iml
+amadeus-wiremock.ipr
+amadeus-wiremock.iws
 **/*.iml
 .idea
 

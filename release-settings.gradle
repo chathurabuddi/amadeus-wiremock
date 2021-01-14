@@ -1,2 +1,2 @@
-rootProject.name = 'wiremock'
+rootProject.name = 'amadeus-wiremock'
 include 'java7', 'java8'
