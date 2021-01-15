@@ -2,157 +2,148 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>WireMock Recorder</title>
-
+    <title>Amadeus Mock API Recorder</title>
     <script src='/__admin/recorder/lib/jquery-3.4.1.min.js' type='text/javascript'></script>
-
+	<script src='/__admin/recorder/lib/bootstrap.bundle.min.js' type='text/javascript'></script>
+    <link rel="stylesheet" href="/__admin/recorder/css/bootstrap.min.css">
     <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+    	@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
         body {
-            font-family: sans-serif;
+            font-family: 'Roboto Slab', Helvetica, Arial, sans-serif;
+  			font-size: 15px;
         }
-
-        h1 {
-            margin-bottom: 3rem;
-            color: #6C7692;
-        }
-
-        #logo {
-            height: 40px;
-            width: auto;
-            display: inline;
-            vertical-align: text-bottom;
-            padding-bottom: 0.2rem;
-        }
-
-        .content {
-            margin: auto;
-            width: 600px;
-            /*height: 300px;*/
-            padding-top: 100px;
-            vertical-align: middle;
-        }
-
-        .ca-cert-box {
-            border: 1px solid black;
-            padding: 1em;
-            vertical-align: middle;
-            margin-top: 80px;
-            color: #898989;
-            font-size: 90%;
-        }
-
-        .ca-cert-box a {
-            color: #42407d;
-        }
-
-        .ca-cert-box a:visited {
-            color: #42407d;
-        }
-
-        button {
-            background-color: #1D2539;
-            padding: 10px;
-            color: white;
-            font-size: 1.5rem;
-            border-radius: 5px;
-            border: none;
-            margin-right: 1rem;
-        }
-
-        button:disabled {
-            background-color: #AAA;
-        }
-
-        input {
-            border-radius: 5px;
-        }
-
-        #targetBaseUrlLabel {
-            color: #777;
-            font-size: 1.2rem;
-        }
-
-        #targetBaseUrl {
-            height: 1.5rem;
-            width: 32rem;
-            display: block;
-            margin-top: 0.3rem;
-            margin-bottom: 1rem;
-            border: 2px solid grey;
-            padding: 5px;
-        }
-
-        #validationMessage {
-            margin-bottom: 3rem;
-            border: none;
-            color: transparent;
-            width: 32rem;
-            padding: 6px;
-        }
-
-        .showError {
-            border: 1px solid red !important;
-            color: red !important;
-        }
-
-        .showMessage {
-            border: 1px solid darkgreen !important;
-            color: darkgreen !important;
-        }
-
-
+        .form-control:focus {
+	        border-color: rgba(0, 0, 0, 0.3);
+	        box-shadow: none;
+	    }
+	    .header {
+		    background: #EEE;
+		    margin-bottom: 16px;
+		}
+		.header h2 {
+		    margin: auto;
+		    padding: 30px 0;
+			text-transform: uppercase;
+			font-size: 24px;
+		}
+		.alert-light {
+			border: 1px solid #EEE;
+		}
+		.alert i {
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.fade-effect{
+		    overflow-y: hidden;
+		    display: block;
+		    position: relative;
+		    padding-top: 20px;
+		    transition: max-height .5s ease 0s;
+		    max-height: 0px;
+		}
+		.fade-effect:before {
+			content: "";
+		    position: absolute;
+		    z-index: 1;
+		    top: 0;
+		    left: 0;
+		    pointer-events: none;
+		    background-image: linear-gradient(to top, rgba(255,255,255, 0), rgba(255,255,255, 1) 90%);
+		    width: 100%;
+		    height: 20px;
+		}
+		#alert-container {
+			transition: top .5s ease 0s;
+			top: -100px;
+		}
+		.footer {
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			padding-bottom: 20px;
+			width: 100%;
+		}
     </style>
 </head>
 <body>
-
-<div class="content">
-    <h1>
-        <img src="/__admin/recorder/images/wiremock-concept-icon-01.png" id="logo"/>
-        WireMock Recorder
-    </h1>
-
-    <label id="targetBaseUrlLabel" for="targetBaseUrl">Target URL</label>
-    <input type="text" id="targetBaseUrl" name="targetBaseUrl" max="128"/>
-    <div id="validationMessage"></div>
-
-    <button id="startRecording" disabled="disabled">Record</button>
-    <button id="stopRecording" disabled="disabled">Stop</button>
-
-    <div class="ca-cert-box">
-        <p>To record stubs from an HTTPS endpoint using browser (forward) proxying, you may need to trust WireMock's CA cert, which
-        can be downloaded here: <a href="../certs/wiremock-ca.crt">wiremock-ca.crt</a>
-        <p>See the <a href="http://wiremock.org/docs/proxying/#browser-proxying-of-https" target="_blank">documentation on HTTPS proxying</a> for more details.
-    </div>
+<div class="header d-flex flex-wrap align-items-center">
+  <h2>Amadeus Mock API Recorder</h1>
+</div>
+<div class="container">
+	<form>
+		<div class="fade-effect">
+			<div role="alert" id="alert-container">
+				<i class="bi bi-check2-circle"></i> All done!
+			</div>
+		</div>
+		<div class="mb-3">
+		    <label id="targetBaseUrlLabel" for="targetBaseUrl">Target URL</label>
+		    <input class="form-control disabled" type="text" id="targetBaseUrl" name="targetBaseUrl" value="https://test.api.amadeus.com/v2" readonly="readonly" />
+		</div>
+	    <button class="btn btn-dark" id="startRecording" disabled="disabled">Record</button>
+	    <button class="btn btn-dark" id="stopRecording" disabled="disabled">Stop</button>
+	</form>
+	<br/><br/>
+	<div class="row">
+		<div class="col-sm">
+			<div class="alert alert-light" role="alert">
+			  To record stubs from an HTTPS endpoint using browser (forward) proxying, you may need to trust WireMock's CA cert, 
+			  which can be downloaded here: <a href="../certs/wiremock-ca.crt" class="alert-link">wiremock-ca.crt</a>. 
+			</div>
+		</div>
+	</div>
+	<div class="row footer">
+		<div class="col-sm text-center">
+			<img src="/__admin/recorder/images/wiremock.png">&nbsp;&nbsp;
+			<img src="/__admin/recorder/images/ozenlabs.png">&nbsp;&nbsp;&nbsp;
+			<img src="/__admin/recorder/images/amadeus.png">
+		</div>
+	</div>
 </div>
 
 <script type="text/javascript">
     function showMessage(message) {
-        $('#validationMessage')
-            .removeClass('showError')
-            .addClass('showMessage')
-            .text(message);
+    	$('#alert-container')
+    		.removeClass('alert-danger')
+    		.removeClass('alert-primary')
+    		.addClass('alert alert-success')
+    		.html('<i class="bi bi-check2-circle"></i> ' + message).css("top", "0px");
+        $('.fade-effect').css("max-height", "100px");
+    }
+    
+    function showInfo(message) {
+    	$('#alert-container')
+    		.removeClass('alert-success')
+    		.removeClass('alert-danger')
+    		.addClass('alert alert-primary')
+    		.html('<i class="bi bi-exclamation-circle"></i> ' + message).css("top", "0px");
+        $('.fade-effect').css("max-height", "100px");
     }
 
     function showError(message) {
-        $('#validationMessage')
-            .removeClass('showMessage')
-            .addClass('showError')
-            .text(message);
+    	$('#alert-container')
+    		.removeClass('alert-success')
+    		.removeClass('alert-primary')
+    		.addClass('alert alert-danger')
+    		.html('<i class="bi bi-x-circle"></i> ' + message).css("top", "0px");
+        $('.fade-effect').css("max-height", "100px");
     }
 
     function hideMessage() {
-        $('#validationMessage').removeClass('showError');
+    	$('#alert-container').css("top", "-100px");
+    	$('.fade-effect').css("max-height", 0);
     }
 
     $(function() {
         var base = window.location.href.startsWith('file') ?
-            'http://localhost:8080' :
+            'http://localhost:5000' :
             '';
 
         $.getJSON(base + '/__admin/recordings/status', function(data) {
             if (data.status === 'Recording') {
                 $('#stopRecording').attr('disabled', false);
-                showMessage('Recording...');
+                showInfo('Recording...');
             } else {
                 $('#startRecording').attr('disabled', false);
             }
@@ -161,7 +152,10 @@
         $('#startRecording').click(function(event) {
             var baseUrl = $('#targetBaseUrl').val();
             if (baseUrl == null || baseUrl.length === 0) {
-                showError('You need to enter a valid target URL.');
+				hideMessage();
+				setTimeout(function() {
+					showError('You need to enter a valid target URL.');
+				}, 500);
                 return;
             } else {
                 hideMessage();
@@ -180,7 +174,10 @@
                 dataType: 'json'
             }).done(function() {
                 $('#stopRecording').attr('disabled', false);
-                showMessage('Recording...');
+				hideMessage();
+				setTimeout(function() {
+            		showInfo('Recording...');
+            	}, 500);
             });
         });
 
@@ -191,9 +188,12 @@
                 crossDomain: true,
                 url: base + '/__admin/recordings/stop'
             }).done(function(data) {
-                var count = data.mappings.length;
-                showMessage('Captured ' + count + ' stub mappings.');
-                $('#startRecording').attr('disabled', false);
+            	hideMessage();
+            	setTimeout(function() {
+            		var count = data.mappings.length;
+                    showMessage('Captured ' + count + ' stub mappings.');
+                    $('#startRecording').attr('disabled', false);
+            	}, 500);
             });
 
         });
